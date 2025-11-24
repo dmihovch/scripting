@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+NAME=$1
+mkdir -p $NAME $NAME/src $NAME/include
+cd $NAME
+touch main.c src/${NAME}.c include/${NAME}.h .gitignore Makefile
+cat <<EOF > .gitignore
+${NAME}
+*.o
+.DS_Store
+EOF
+cat <<EOF > Makefile 
+all: main.c src/${NAME}.c
+	gcc -o ${NAME} main.c src/${NAME}.c
+
+clean: ${NAME}
+	rm ${NAME}
+
+run: ${NAME}
+	./${NAME}
+
+valgrind: ${NAME}
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./"${NAME}"
+EOF
+
+cat <<EOF > src/${NAME}.c
+#include "../include/${NAME}.h"
+EOF
+
+cat <<EOF > main.c
+#include <stdio.h>
+#include "include/${NAME}.h"
+
+int main(int argc, char** argv){
+	printf("Hello, ${NAME}\n");
+	return 0;
+}
+EOF
+
+git init
+git add .
+git commit -m "Init"
+gh repo create $NAME --private --source=. --remote=origin --push
