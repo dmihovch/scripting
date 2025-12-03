@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+
+if [[ -v CC ]]; then
+	echo $CC
+else
+	echo "NO CC"
+fi
