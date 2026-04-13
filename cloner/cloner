@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+REPO=$1
+
+if [ ${REPO} ]; then
+  git clone git@github.com:dmihovch/${REPO}.git
+  exit
+fi
+
+echo "No repository name provided. Usage: cloner <repo_name>"
+
+
