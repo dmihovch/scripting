@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+cosmic-randr mode eDP-1 1920 1080 --refresh 144
