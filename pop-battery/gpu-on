@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+fail(){
+	echo "system76 error"
+	exit 1
+}
+
+system76-power graphics nvidia || fail
+
+read -p "Apply changes now? [y/n]" resp
+
+if [ "$resp" == "y" ]; then
+	reboot
+	exit 0
+fi
+
+echo "Reboot to apply changes"
+exit 0
+
