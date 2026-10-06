@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [[ "$#" -ne 1 ]]; then
+	echo "Usage $0 <song url yt>"
+	exit 1
+fi
+
+PLAYLIST_URL=$1
+
+
+yt-dlp -f "ba[ext=m4a]/ba" -x --audio-format m4a --audio-quality 0 \
+  --embed-metadata --embed-thumbnail --convert-thumbnails jpg \
+  --parse-metadata "%(playlist)s:%(meta_album)s" \
+  --parse-metadata "%(track_number,playlist_index|0)s:%(track_number)s" \
+  --download-archive "$HOME/Music/.yt-dlp-archive.txt" \
+  -o "$HOME/Music/%(uploader)s/%(playlist)s/%(playlist_index)02d - %(title)s.%(ext)s" \
+  "$PLAYLIST_URL"

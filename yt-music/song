@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [[ "$#" -ne 1 ]]; then
+	echo "Usage $0 <song url yt>"
+	exit 1
+fi
+
+VIDEO_URL=$1
+
+yt-dlp -f "ba[ext=m4a]/ba" -x --audio-format m4a --audio-quality 0 \
+  --embed-metadata --embed-thumbnail --convert-thumbnails jpg --no-playlist \
+  -o "$HOME/Music/%(uploader)s/%(title)s.%(ext)s" "$VIDEO_URL"
+
